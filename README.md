@@ -46,6 +46,9 @@ proofaudio-cli evidence.proofaudio
 # Verify with password on command line
 proofaudio-cli evidence.proofaudio --password "shared-secret"
 
+# Extract audio from sealed proof after verification
+proofaudio-cli evidence.proofaudio --password "shared-secret" --extract ./output/
+
 # JSON output for scripting
 proofaudio-cli ./bundle/ --format json
 
@@ -77,7 +80,7 @@ App:         com.bestdaylabs.proofaudio v1.0.0
 
 TRUST VECTORS
 -------------
-Location:    37.775, -122.418 (+/- 65m)
+Location:    37.775, -122.418 → 37.775, -122.419 (+/- 65m)
 Motion:      Stationary (variance: 0.0023)
 Continuity:  Uninterrupted
 Clock:       America/Los_Angeles
