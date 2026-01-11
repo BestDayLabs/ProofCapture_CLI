@@ -1,0 +1,46 @@
+{
+  "appBundleId" : "com.bestdaylabs.proofaudio",
+  "appVersion" : "1.0.0",
+  "audioFormat" : "aac",
+  "audioHash" : "IT6TjkgAL2sd11jeNxrZlylKppU7OTiXUL5JzrWkp9o=",
+  "audioSizeBytes" : 441000,
+  "captureEnd" : "2026-01-11T03:25:50Z",
+  "captureStart" : "2026-01-11T03:25:45Z",
+  "deviceKeyId" : "ChULrMSwB53sxhRQCy\/lxV+xYfnUZCC5JS0bsDSi8Rw=",
+  "durationSeconds" : 5,
+  "publicKey" : "RqtS+GyBAjOiR\/SUy6ZgleS9tNikYvmdWd4AS3Es9pTzZFWpnUU5ECQTidP2N4LMwhjo07IYM2wUT8McsByKkA==",
+  "schemaVersion" : 1,
+  "signature" : "\/uEdw9zHGGHRjz4zEHgJv6l8ek8N\/Qr65gbo5+ZgbTsOAwPlvOLCV4lFzbX7JdiiIzRUkoH1P2qf7G64qCmhzA==",
+  "trustVectors" : {
+    "clock" : {
+      "monotonicDelta" : 5,
+      "timeZone" : "America\/Chicago",
+      "wallClockEnd" : "2026-01-11T03:25:50Z",
+      "wallClockStart" : "2026-01-11T03:25:45Z"
+    },
+    "continuity" : {
+      "interruptionEvents" : [
+
+      ],
+      "uninterrupted" : true
+    },
+    "location" : {
+      "end" : {
+        "accuracy" : 65,
+        "lat" : 37.775,
+        "lon" : -122.418
+      },
+      "start" : {
+        "accuracy" : 65,
+        "lat" : 37.775,
+        "lon" : -122.418
+      }
+    },
+    "motion" : {
+      "accelerationVariance" : 0.002,
+      "duration" : 5,
+      "rotationVariance" : 0.001,
+      "sampleCount" : 500
+    }
+  }
+}
