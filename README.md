@@ -4,17 +4,35 @@ Verify ProofAudio recordings from the command line.
 
 ## Installation
 
+### Download Binary (Recommended)
+
+1. Download the latest release from [Releases](https://github.com/BestDayLabs/proofaudio-cli/releases)
+2. Unzip the downloaded file:
+   ```bash
+   unzip proofaudio-cli-macos-arm64.zip
+   ```
+3. Make it executable:
+   ```bash
+   chmod +x proofaudio-cli-macos-arm64
+   ```
+4. Move to your PATH (optional):
+   ```bash
+   sudo mv proofaudio-cli-macos-arm64 /usr/local/bin/proofaudio-cli
+   ```
+
+Now you can run `proofaudio-cli` from anywhere.
+
 ### Build from Source
 
+Requires [Rust](https://rustup.rs/) installed.
+
 ```bash
+git clone https://github.com/BestDayLabs/proofaudio-cli.git
+cd proofaudio-cli
 cargo build --release
 ```
 
 The binary will be at `target/release/proofaudio-cli`.
-
-### Download Binary
-
-Download from [Releases](https://github.com/bestdaylabs/proofaudio-cli/releases).
 
 ## Usage
 
