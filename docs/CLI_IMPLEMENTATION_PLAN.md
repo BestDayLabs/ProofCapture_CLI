@@ -1,12 +1,16 @@
 # ProofAudio CLI Verifier — Implementation Plan
 
+> **STATUS: COMPLETE** — The CLI verifier has been fully implemented and released. This document is retained for historical reference.
+
 ## Overview
 
 A cross-platform command-line tool for verifying ProofAudio recordings. Enables third-party verification without requiring the iOS app.
 
 **Repository:** `proofaudio-cli`
-**Language:** Rust (recommended) or Go
-**License:** MIT or Apache 2.0
+**Language:** Rust
+**License:** MIT
+**Current Version:** 0.2.0
+**Releases:** https://github.com/BestDayLabs/proofaudio-cli/releases
 
 ---
 
@@ -405,20 +409,20 @@ MIT
 
 ---
 
-## Checklist Before First Release
+## Release Checklist (COMPLETED)
 
-- [ ] All crypto operations match iOS implementation
-- [ ] Verifies iOS-generated standard bundles
-- [ ] Verifies iOS-generated sealed bundles
-- [ ] All exit codes implemented
-- [ ] Human-readable output format
-- [ ] JSON output option
-- [ ] Unit tests pass
-- [ ] Integration tests with real bundles
-- [ ] Binaries built for macOS (Intel + ARM), Windows, Linux
-- [ ] README complete
-- [ ] LICENSE file present
-- [ ] GitHub Actions CI configured
+- [x] All crypto operations match iOS implementation
+- [x] Verifies iOS-generated standard bundles
+- [x] Verifies iOS-generated sealed bundles
+- [x] All exit codes implemented
+- [x] Human-readable output format
+- [x] JSON output option
+- [x] Unit tests pass
+- [x] Integration tests with real bundles
+- [x] Binaries built for macOS (Intel + ARM), Windows, Linux
+- [x] README complete
+- [x] LICENSE file present
+- [x] GitHub Actions CI configured
 
 ---
 

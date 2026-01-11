@@ -507,7 +507,7 @@ App:         com.bestdaylabs.proofaudio v1.0.0
 
 TRUST VECTORS
 -------------
-Location:    37.775, -122.418 (+/- 65m)
+Location:    37.775, -122.418 → 37.775, -122.419 (+/- 65m)
 Motion:      Stationary (variance: 0.0023)
 Continuity:  Uninterrupted
 Clock:       America/Los_Angeles
@@ -533,6 +533,22 @@ The audio file does not match the cryptographic hash
 recorded at capture time. This recording cannot be
 verified as authentic.
 ```
+
+### 11.3 Audio Extraction (Sealed Bundles)
+
+The CLI supports extracting the audio file from sealed bundles after successful verification:
+
+```bash
+proofaudio-cli evidence.proofaudio --password "secret" --extract ./output/
+```
+
+Upon successful verification, this writes the audio file to the specified directory:
+```
+Verification passed!
+Extracted audio to: ./output/recording.m4a
+```
+
+**Security Note:** The extracted audio file loses its cryptographic binding to the manifest once written to disk. For evidentiary purposes, always provide the original `.proofaudio` file.
 
 ---
 

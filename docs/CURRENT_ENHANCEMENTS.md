@@ -22,6 +22,27 @@ This document tracks approved enhancements and their implementation status.
 
 ---
 
+### 2. Audio Extraction from Sealed Bundles
+
+**Task:** Add `--extract` flag to save audio from sealed bundles after verification
+
+**Purpose:** Allow users to listen to verified recordings without keeping them only in encrypted form
+
+**Status:** Completed
+
+**Changes:**
+- Added `--extract <DIR>` CLI argument
+- Created `verify_and_extract_sealed_bundle()` function in verify.rs
+- Audio is only written after successful verification
+- Security note added to documentation
+
+**Usage:**
+```bash
+proofaudio-cli evidence.proofaudio --password "secret" --extract ./output/
+```
+
+---
+
 
 ## Open Enhancements
 
