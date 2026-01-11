@@ -1,6 +1,6 @@
 [package]
 name = "proofaudio-cli"
-version = "0.1.0"
+version = "0.2.0"
 edition = "2021"
 authors = ["Best Day Labs"]
 description = "Verify ProofAudio recordings from the command line"
