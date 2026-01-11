@@ -18,6 +18,15 @@ pub struct VerificationResult {
     pub trust_level: TrustLevel,
 }
 
+/// Result of sealed bundle verification with extracted audio.
+#[derive(Debug)]
+pub struct SealedVerificationResult {
+    pub manifest: SignedAudioManifest,
+    pub trust_level: TrustLevel,
+    pub audio_data: Vec<u8>,
+    pub audio_filename: String,
+}
+
 /// Verify a standard proof bundle (directory or files).
 ///
 /// Expected structure:
@@ -51,6 +60,15 @@ pub fn verify_standard_bundle(bundle_path: &Path) -> Result<VerificationResult> 
 
 /// Verify a sealed proof bundle (.proofaudio file).
 pub fn verify_sealed_bundle(bundle_path: &Path, password: &str) -> Result<VerificationResult> {
+    let result = verify_and_extract_sealed_bundle(bundle_path, password)?;
+    Ok(VerificationResult {
+        manifest: result.manifest,
+        trust_level: result.trust_level,
+    })
+}
+
+/// Verify a sealed proof bundle and return the decrypted audio data.
+pub fn verify_and_extract_sealed_bundle(bundle_path: &Path, password: &str) -> Result<SealedVerificationResult> {
     // Read bundle
     let bundle_bytes = fs::read(bundle_path).map_err(|e| VerifyError::Io(e))?;
 
@@ -63,7 +81,14 @@ pub fn verify_sealed_bundle(bundle_path: &Path, password: &str) -> Result<Verifi
     let manifest_bytes = payload.manifest_bytes()?;
 
     // Verify
-    verify_audio_and_manifest(&audio_bytes, &manifest_bytes)
+    let verification = verify_audio_and_manifest(&audio_bytes, &manifest_bytes)?;
+
+    Ok(SealedVerificationResult {
+        manifest: verification.manifest,
+        trust_level: verification.trust_level,
+        audio_data: audio_bytes,
+        audio_filename: payload.audio_filename.clone(),
+    })
 }
 
 /// Core verification of audio bytes against manifest.

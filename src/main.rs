@@ -2,13 +2,14 @@
 //!
 //! Verify ProofAudio recordings from the command line.
 
+use std::fs;
 use std::io::{self, Write};
 use std::path::PathBuf;
 use std::process::ExitCode;
 
 use clap::Parser;
 
-use proofaudio_cli::verify::{verify_sealed_bundle, verify_standard_bundle, VerificationResult};
+use proofaudio_cli::verify::{verify_sealed_bundle, verify_and_extract_sealed_bundle, verify_standard_bundle, VerificationResult};
 use proofaudio_cli::VerifyError;
 
 /// ProofAudio CLI Verifier - Verify ProofAudio recordings
@@ -33,6 +34,10 @@ struct Args {
     /// Show verbose output
     #[arg(short, long)]
     verbose: bool,
+
+    /// Extract audio file from sealed bundle to specified directory
+    #[arg(short, long, value_name = "DIR")]
+    extract: Option<PathBuf>,
 }
 
 #[derive(Clone, Debug, PartialEq)]
@@ -83,8 +88,32 @@ fn run(args: &Args) -> Result<VerificationResult, VerifyError> {
             Some(p) => p.clone(),
             None => prompt_password()?,
         };
-        verify_sealed_bundle(path, &password)
+
+        // If extract is requested, use the extract function
+        if let Some(extract_dir) = &args.extract {
+            let result = verify_and_extract_sealed_bundle(path, &password)?;
+
+            // Create output directory if needed
+            fs::create_dir_all(extract_dir).map_err(|e| VerifyError::Io(e))?;
+
+            // Write audio file
+            let audio_path = extract_dir.join(&result.audio_filename);
+            fs::write(&audio_path, &result.audio_data).map_err(|e| VerifyError::Io(e))?;
+
+            eprintln!("Audio extracted to: {}", audio_path.display());
+
+            Ok(VerificationResult {
+                manifest: result.manifest,
+                trust_level: result.trust_level,
+            })
+        } else {
+            verify_sealed_bundle(path, &password)
+        }
     } else {
+        if args.extract.is_some() {
+            eprintln!("Note: --extract only applies to sealed .proofaudio files.");
+            eprintln!("      Standard bundles already contain the audio file.");
+        }
         verify_standard_bundle(path)
     }
 }
@@ -157,8 +186,8 @@ fn print_success_text(result: &VerificationResult, verbose: bool) {
 
     if let Some(loc) = &m.trust_vectors.location {
         println!(
-            "Location:    {:.3}, {:.3} (+/- {:.0}m)",
-            loc.start.lat, loc.start.lon, loc.start.accuracy
+            "Location:    {:.3}, {:.3} → {:.3}, {:.3} (+/- {:.0}m)",
+            loc.start.lat, loc.start.lon, loc.end.lat, loc.end.lon, loc.start.accuracy
         );
     } else {
         println!("Location:    Not captured");
@@ -225,7 +254,10 @@ fn print_success_json(result: &VerificationResult) {
             "location": m.trust_vectors.location.as_ref().map(|l| serde_json::json!({
                 "startLat": l.start.lat,
                 "startLon": l.start.lon,
-                "accuracy": l.start.accuracy
+                "startAccuracy": l.start.accuracy,
+                "endLat": l.end.lat,
+                "endLon": l.end.lon,
+                "endAccuracy": l.end.accuracy
             })),
             "motion": m.trust_vectors.motion.as_ref().map(|mot| serde_json::json!({
                 "accelerationVariance": mot.acceleration_variance,
