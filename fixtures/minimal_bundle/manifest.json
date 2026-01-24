@@ -4,13 +4,13 @@
   "audioFormat" : "aac",
   "audioHash" : "Wxhwz2uJrpqeaZzMQrIabr4azlI0EygRI02tqgZqA6Y=",
   "audioSizeBytes" : 88200,
-  "captureEnd" : "2026-01-11T03:37:42Z",
-  "captureStart" : "2026-01-11T03:37:41Z",
-  "deviceKeyId" : "\/2pbuShGMAXLOuiaPpQY6klnOidVPZPVppLSZaOtpno=",
+  "captureEnd" : "2026-01-24T05:41:03Z",
+  "captureStart" : "2026-01-24T05:41:02Z",
+  "deviceKeyId" : "1xbZPl5wbRvV5gIeVHTCoUdgb55IMFjzF5ImnRPwx4o=",
   "durationSeconds" : 1,
-  "publicKey" : "IsXTwhpPBAHbanp+JFYYgsbM8prNVU0L8RnbD79\/6N4bBuMuE8t7ThHqTjXVKk74ysOXQcGj+xEtxMbJ3iNHcg==",
+  "publicKey" : "b9YxtJcsbdVGJ+OpOn6IN8SaZEOg8yXA1PumapXkLfUeQ+1C4Bd0wN8F61G5UKBUJ0tlNXb3nVE1V6hcKrbOuA==",
   "schemaVersion" : 1,
-  "signature" : "LMCTMYC0T8CD118vfsVS1l7y5RhoBj+csPsZ5pguIiKlCqgFanF5jgXmjs7f0FD5DsrIUAzAwWh7fetuWTMp8A==",
+  "signature" : "oYU22QLomInc3Lji9etp\/anE5pNWPajrMbGk5Ox5mN\/diIzti0MGewWhzm63nPt+WVAO115fbxo03Yma8Nsn2Q==",
   "trustVectors" : {
 
   }

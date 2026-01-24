@@ -185,10 +185,9 @@ fn print_success_text(result: &VerificationResult, verbose: bool) {
     println!("-------------");
 
     if let Some(loc) = &m.trust_vectors.location {
-        println!(
-            "Location:    {:.3}, {:.3} → {:.3}, {:.3} (+/- {:.0}m)",
-            loc.start.lat, loc.start.lon, loc.end.lat, loc.end.lon, loc.start.accuracy
-        );
+        println!("Location:");
+        println!("  Start:     {:.3}, {:.3} (±{:.0}m)", loc.start.lat, loc.start.lon, loc.start.accuracy);
+        println!("  End:       {:.3}, {:.3} (±{:.0}m)", loc.end.lat, loc.end.lon, loc.end.accuracy);
     } else {
         println!("Location:    Not captured");
     }
@@ -199,7 +198,11 @@ fn print_success_text(result: &VerificationResult, verbose: bool) {
         } else {
             "In motion"
         };
-        println!("Motion:      {} (variance: {:.4})", state, motion.acceleration_variance);
+        println!("Motion:      {}", state);
+        println!("  Accel Var: {:.6}", motion.acceleration_variance);
+        println!("  Rot Var:   {:.6}", motion.rotation_variance);
+        println!("  Duration:  {:.2}s", motion.duration);
+        println!("  Samples:   {}", motion.sample_count);
     } else {
         println!("Motion:      Not captured");
     }
@@ -211,12 +214,24 @@ fn print_success_text(result: &VerificationResult, verbose: bool) {
             "Interrupted"
         };
         println!("Continuity:  {}", status);
+        if !cont.interruption_events.is_empty() {
+            println!("  Events:");
+            for event in &cont.interruption_events {
+                println!("    - {}: {}", event.timestamp, event.reason);
+            }
+        }
     } else {
         println!("Continuity:  Not tracked");
     }
 
     if let Some(clock) = &m.trust_vectors.clock {
-        println!("Clock:       {}", clock.time_zone);
+        println!("Clock:");
+        println!("  Start:     {}", clock.wall_clock_start);
+        println!("  End:       {}", clock.wall_clock_end);
+        println!("  Delta:     {:.6}s", clock.monotonic_delta);
+        println!("  Time Zone: {}", clock.time_zone);
+    } else {
+        println!("Clock:       Not captured");
     }
 
     // Limitations
@@ -237,6 +252,7 @@ fn print_success_json(result: &VerificationResult) {
         "status": "verified",
         "trustLevel": result.trust_level.display_name(),
         "trustLevelLabel": result.trust_level.label(),
+        "schemaVersion": m.schema_version,
         "recording": {
             "captureStart": m.capture_start,
             "captureEnd": m.capture_end,
@@ -247,29 +263,44 @@ fn print_success_json(result: &VerificationResult) {
         },
         "identity": {
             "deviceKeyId": m.device_key_id,
+            "publicKey": m.public_key,
             "appBundleId": m.app_bundle_id,
             "appVersion": m.app_version
         },
         "trustVectors": {
             "location": m.trust_vectors.location.as_ref().map(|l| serde_json::json!({
-                "startLat": l.start.lat,
-                "startLon": l.start.lon,
-                "startAccuracy": l.start.accuracy,
-                "endLat": l.end.lat,
-                "endLon": l.end.lon,
-                "endAccuracy": l.end.accuracy
+                "start": {
+                    "lat": l.start.lat,
+                    "lon": l.start.lon,
+                    "accuracy": l.start.accuracy
+                },
+                "end": {
+                    "lat": l.end.lat,
+                    "lon": l.end.lon,
+                    "accuracy": l.end.accuracy
+                }
             })),
             "motion": m.trust_vectors.motion.as_ref().map(|mot| serde_json::json!({
                 "accelerationVariance": mot.acceleration_variance,
+                "rotationVariance": mot.rotation_variance,
+                "duration": mot.duration,
                 "sampleCount": mot.sample_count
             })),
             "continuity": m.trust_vectors.continuity.as_ref().map(|c| serde_json::json!({
-                "uninterrupted": c.uninterrupted
+                "uninterrupted": c.uninterrupted,
+                "interruptionEvents": c.interruption_events.iter().map(|e| serde_json::json!({
+                    "timestamp": e.timestamp,
+                    "reason": e.reason
+                })).collect::<Vec<_>>()
             })),
             "clock": m.trust_vectors.clock.as_ref().map(|c| serde_json::json!({
+                "wallClockStart": c.wall_clock_start,
+                "wallClockEnd": c.wall_clock_end,
+                "monotonicDelta": c.monotonic_delta,
                 "timeZone": c.time_zone
             }))
-        }
+        },
+        "signature": m.signature
     });
 
     println!("{}", serde_json::to_string_pretty(&json).unwrap());

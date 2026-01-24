@@ -4,19 +4,19 @@
   "audioFormat" : "aac",
   "audioHash" : "IT6TjkgAL2sd11jeNxrZlylKppU7OTiXUL5JzrWkp9o=",
   "audioSizeBytes" : 441000,
-  "captureEnd" : "2026-01-11T03:37:46Z",
-  "captureStart" : "2026-01-11T03:37:41Z",
-  "deviceKeyId" : "\/2pbuShGMAXLOuiaPpQY6klnOidVPZPVppLSZaOtpno=",
+  "captureEnd" : "2026-01-24T05:41:07Z",
+  "captureStart" : "2026-01-24T05:41:02Z",
+  "deviceKeyId" : "1xbZPl5wbRvV5gIeVHTCoUdgb55IMFjzF5ImnRPwx4o=",
   "durationSeconds" : 5,
-  "publicKey" : "IsXTwhpPBAHbanp+JFYYgsbM8prNVU0L8RnbD79\/6N4bBuMuE8t7ThHqTjXVKk74ysOXQcGj+xEtxMbJ3iNHcg==",
+  "publicKey" : "b9YxtJcsbdVGJ+OpOn6IN8SaZEOg8yXA1PumapXkLfUeQ+1C4Bd0wN8F61G5UKBUJ0tlNXb3nVE1V6hcKrbOuA==",
   "schemaVersion" : 1,
-  "signature" : "\/0AFQGCrP0JyXSi1mHgJfU1VLDQBb4njm9t7+9tcQsdOxhJD6vfyIj+kGlxMEmP97DjZ6nlYu75RASW6Lt2GKw==",
+  "signature" : "twXzjH8oitWzvRLD9HErpGE+6c0i\/acyhnnBwICqqe01ze7KSNuvlrLMFhfVPjJ\/f4H2PzNgqf47Q5Apsqg8DQ==",
   "trustVectors" : {
     "clock" : {
       "monotonicDelta" : 5,
       "timeZone" : "America\/Chicago",
-      "wallClockEnd" : "2026-01-11T03:37:46Z",
-      "wallClockStart" : "2026-01-11T03:37:41Z"
+      "wallClockEnd" : "2026-01-24T05:41:07Z",
+      "wallClockStart" : "2026-01-24T05:41:02Z"
     },
     "continuity" : {
       "interruptionEvents" : [
