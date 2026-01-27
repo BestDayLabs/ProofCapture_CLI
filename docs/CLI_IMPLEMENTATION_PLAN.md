@@ -1,16 +1,16 @@
-# ProofAudio CLI Verifier — Implementation Plan
+# ProofCapture CLI Verifier — Implementation Plan
 
 > **STATUS: COMPLETE** — The CLI verifier has been fully implemented and released. This document is retained for historical reference.
 
 ## Overview
 
-A cross-platform command-line tool for verifying ProofAudio recordings. Enables third-party verification without requiring the iOS app.
+A cross-platform command-line tool for verifying ProofCapture recordings. Enables third-party verification without requiring the iOS app.
 
-**Repository:** `proofaudio-cli`
+**Repository:** `proofcapture-cli`
 **Language:** Rust
 **License:** MIT
 **Current Version:** 0.2.0
-**Releases:** https://github.com/BestDayLabs/proofaudio-cli/releases
+**Releases:** https://github.com/BestDayLabs/proofcapture-cli/releases
 
 ---
 
@@ -18,18 +18,18 @@ A cross-platform command-line tool for verifying ProofAudio recordings. Enables 
 
 ```bash
 # Create repo
-mkdir proofaudio-cli && cd proofaudio-cli
+mkdir proofcapture-cli && cd proofcapture-cli
 git init
 
 # If Rust:
-cargo init --name proofaudio-cli
+cargo init --name proofcapture-cli
 
 # If Go:
-go mod init github.com/bestdaylabs/proofaudio-cli
+go mod init github.com/bestdaylabs/proofcapture-cli
 
 # Copy these files from iOS repo:
-cp /path/to/ProofAudio/Docs/CLI_INTEROPERABILITY_SPEC.md docs/
-cp /path/to/ProofAudio/Docs/CLI_VERIFIER_REQUIREMENTS.md docs/
+cp /path/to/ProofCapture/Docs/CLI_INTEROPERABILITY_SPEC.md docs/
+cp /path/to/ProofCapture/Docs/CLI_VERIFIER_REQUIREMENTS.md docs/
 ```
 
 ---
@@ -38,7 +38,7 @@ cp /path/to/ProofAudio/Docs/CLI_VERIFIER_REQUIREMENTS.md docs/
 
 ### Rust
 ```
-proofaudio-cli/
+proofcapture-cli/
 ├── Cargo.toml
 ├── README.md
 ├── LICENSE
@@ -66,13 +66,13 @@ proofaudio-cli/
 
 ### Go
 ```
-proofaudio-cli/
+proofcapture-cli/
 ├── go.mod
 ├── go.sum
 ├── README.md
 ├── LICENSE
 ├── cmd/
-│   └── proofaudio-cli/
+│   └── proofcapture-cli/
 │       └── main.go          # CLI entry point
 ├── pkg/
 │   ├── verify/              # Verification logic
@@ -288,7 +288,7 @@ fixtures/full/
 ### 3. Sealed Bundle
 ```
 fixtures/sealed/
-├── test.proofaudio    # Password: "TestPassword123!"
+├── test.proofcapture    # Password: "TestPassword123!"
 └── expected.json
 ```
 
@@ -320,20 +320,20 @@ fixtures/sealed/
 
 ```bash
 # Verify standard bundle
-proofaudio-cli verify ./MyRecording/
-proofaudio-cli verify ./bundle.zip
+proofcapture-cli verify ./MyRecording/
+proofcapture-cli verify ./bundle.zip
 
 # Verify sealed bundle (password prompt)
-proofaudio-cli verify evidence.proofaudio
+proofcapture-cli verify evidence.proofcapture
 
 # Verify sealed bundle (password argument)
-proofaudio-cli verify evidence.proofaudio --password "secret"
+proofcapture-cli verify evidence.proofcapture --password "secret"
 
 # JSON output for scripting
-proofaudio-cli verify ./bundle/ --format json
+proofcapture-cli verify ./bundle/ --format json
 
 # Verbose output
-proofaudio-cli verify ./bundle/ --verbose
+proofcapture-cli verify ./bundle/ --verbose
 ```
 
 ---
@@ -358,41 +358,41 @@ proofaudio-cli verify ./bundle/ --verbose
 ## README Template
 
 ```markdown
-# ProofAudio CLI Verifier
+# ProofCapture CLI Verifier
 
-Verify ProofAudio recordings from the command line.
+Verify ProofCapture recordings from the command line.
 
 ## Installation
 
 ### macOS (Homebrew)
 \`\`\`bash
-brew install bestdaylabs/tap/proofaudio-cli
+brew install bestdaylabs/tap/proofcapture-cli
 \`\`\`
 
 ### Download Binary
-Download from [Releases](https://github.com/bestdaylabs/proofaudio-cli/releases).
+Download from [Releases](https://github.com/bestdaylabs/proofcapture-cli/releases).
 
 ### Build from Source
 \`\`\`bash
-cargo install proofaudio-cli
+cargo install proofcapture-cli
 # or
-go install github.com/bestdaylabs/proofaudio-cli@latest
+go install github.com/bestdaylabs/proofcapture-cli@latest
 \`\`\`
 
 ## Usage
 
 \`\`\`bash
 # Verify a recording
-proofaudio-cli verify recording_bundle/
+proofcapture-cli verify recording_bundle/
 
 # Verify a sealed proof
-proofaudio-cli verify evidence.proofaudio --password "shared-secret"
+proofcapture-cli verify evidence.proofcapture --password "shared-secret"
 \`\`\`
 
 ## What This Verifies
 
 - Audio file has not been modified since capture
-- Recording was made by the ProofAudio iOS app
+- Recording was made by the ProofCapture iOS app
 - Cryptographic signature is valid
 
 ## What This Does NOT Verify

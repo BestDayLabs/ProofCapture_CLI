@@ -1,59 +1,59 @@
-# ProofAudio CLI Verifier
+# ProofCapture CLI Verifier
 
-Verify ProofAudio recordings from the command line.
+Verify ProofCapture recordings from the command line.
 
 ## Installation
 
 ### Download Binary (Recommended)
 
-1. Download the latest release from [Releases](https://github.com/BestDayLabs/proofaudio-cli/releases)
+1. Download the latest release from [Releases](https://github.com/BestDayLabs/proofcapture-cli/releases)
 2. Unzip the downloaded file:
    ```bash
-   unzip proofaudio-cli-macos-arm64.zip
+   unzip proofcapture-cli-macos-arm64.zip
    ```
 3. Make it executable:
    ```bash
-   chmod +x proofaudio-cli-macos-arm64
+   chmod +x proofcapture-cli-macos-arm64
    ```
 4. Move to your PATH (optional):
    ```bash
-   sudo mv proofaudio-cli-macos-arm64 /usr/local/bin/proofaudio-cli
+   sudo mv proofcapture-cli-macos-arm64 /usr/local/bin/proofcapture-cli
    ```
 
-Now you can run `proofaudio-cli` from anywhere.
+Now you can run `proofcapture-cli` from anywhere.
 
 ### Build from Source
 
 Requires [Rust](https://rustup.rs/) installed.
 
 ```bash
-git clone https://github.com/BestDayLabs/proofaudio-cli.git
-cd proofaudio-cli
+git clone https://github.com/BestDayLabs/proofcapture-cli.git
+cd proofcapture-cli
 cargo build --release
 ```
 
-The binary will be at `target/release/proofaudio-cli`.
+The binary will be at `target/release/proofcapture-cli`.
 
 ## Usage
 
 ```bash
 # Verify a standard proof bundle (directory)
-proofaudio-cli ./recording_bundle/
+proofcapture-cli ./recording_bundle/
 
 # Verify a sealed proof (will prompt for password)
-proofaudio-cli evidence.proofaudio
+proofcapture-cli evidence.proofcapture
 
 # Verify with password on command line
-proofaudio-cli evidence.proofaudio --password "shared-secret"
+proofcapture-cli evidence.proofcapture --password "shared-secret"
 
 # Extract audio from sealed proof after verification
-proofaudio-cli evidence.proofaudio --password "shared-secret" --extract ./output/
+proofcapture-cli evidence.proofcapture --password "shared-secret" --extract ./output/
 
 # JSON output for scripting
-proofaudio-cli ./bundle/ --format json
+proofcapture-cli ./bundle/ --format json
 
 # Verbose output with audio hash
-proofaudio-cli ./bundle/ --verbose
+proofcapture-cli ./bundle/ --verbose
 ```
 
 ## Output
@@ -76,7 +76,7 @@ Size:        1234567 bytes
 CRYPTOGRAPHIC IDENTITY
 ----------------------
 Device Key:  a1b2c3d4e5f6...
-App:         com.bestdaylabs.proofaudio v1.0.0
+App:         com.bestdaylabs.proofcapture v1.0.0
 
 TRUST VECTORS
 -------------
@@ -125,7 +125,7 @@ verified as authentic.
 ## What This Verifies
 
 - Audio file has not been modified since capture
-- Recording was made by the ProofAudio iOS app
+- Recording was made by the ProofCapture iOS app
 - Cryptographic signature is valid
 - Trust vectors (location, motion, continuity) if present
 

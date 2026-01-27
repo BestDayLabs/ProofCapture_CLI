@@ -1,4 +1,4 @@
-# Current Enhancements — ProofAudio-cli
+# Current Enhancements — ProofCapture-cli
 
 Best Day Labs
 
@@ -38,7 +38,7 @@ This document tracks approved enhancements and their implementation status.
 
 **Usage:**
 ```bash
-proofaudio-cli evidence.proofaudio --password "secret" --extract ./output/
+proofcapture-cli evidence.proofcapture --password "secret" --extract ./output/
 ```
 
 ---

@@ -1,9 +1,9 @@
-# Technical Specification: ProofAudio CLI Verifier
+# Technical Specification: ProofCapture CLI Verifier
 
-> **IMPLEMENTED** — This specification has been fully implemented in the `proofaudio-cli` tool. See [CLI_IMPLEMENTATION_PLAN.md](CLI_IMPLEMENTATION_PLAN.md) for implementation details and [CLI_INTEROPERABILITY_SPEC.md](CLI_INTEROPERABILITY_SPEC.md) for byte-level format specifications.
+> **IMPLEMENTED** — This specification has been fully implemented in the `proofcapture-cli` tool. See [CLI_IMPLEMENTATION_PLAN.md](CLI_IMPLEMENTATION_PLAN.md) for implementation details and [CLI_INTEROPERABILITY_SPEC.md](CLI_INTEROPERABILITY_SPEC.md) for byte-level format specifications.
 
 ## 1. Purpose & Scope
-The ProofAudio CLI Verifier is a "Universal Verifier" that ensures the cryptographic claims of any ProofAudio recording can be audited on desktop systems. It fulfills the requirement for Deterministic Verification, proving that the "Root of Trust" is mathematical (SHA-256 and P-256 ECDSA) rather than platform-dependent.
+The ProofCapture CLI Verifier is a "Universal Verifier" that ensures the cryptographic claims of any ProofCapture recording can be audited on desktop systems. It fulfills the requirement for Deterministic Verification, proving that the "Root of Trust" is mathematical (SHA-256 and P-256 ECDSA) rather than platform-dependent.
 
 ## 2. Technical Stack
 **Language:** Rust (selected for memory safety and static binary compilation).
@@ -24,10 +24,10 @@ The tool must process two primary artifact types:
 
 Standard Proof Bundle: A directory or ZIP archive containing recording.m4a, manifest.json, and README.txt.
 
-Sealed Proof Bundle (.proofaudio): A single encrypted file containing the audio and manifest.
+Sealed Proof Bundle (.proofcapture): A single encrypted file containing the audio and manifest.
 
 ### 3.2 Decryption Logic (Sealed Proofs Only)
-For .proofaudio files, the tool must execute the following:
+For .proofcapture files, the tool must execute the following:
 
 KDF Execution: Derive a symmetric key from a user-provided password and the plaintext salt found in the bundle header.
 
@@ -58,16 +58,16 @@ Fail-Closed: Any deviation in the hash or signature must result in a binary "FAI
 ### 5.1 Basic Usage
 ```bash
 # Verify a standard bundle
-proofaudio-cli ./MyRecordingBundle/
+proofcapture-cli ./MyRecordingBundle/
 
 # Verify and decrypt a sealed proof
-proofaudio-cli evidence.proofaudio --password "user-secret-pass"
+proofcapture-cli evidence.proofcapture --password "user-secret-pass"
 
 # Extract audio after verification
-proofaudio-cli evidence.proofaudio --password "secret" --extract ./output/
+proofcapture-cli evidence.proofcapture --password "secret" --extract ./output/
 
 # JSON output for scripting
-proofaudio-cli ./bundle/ --format json
+proofcapture-cli ./bundle/ --format json
 ```
 
 ### 5.2 Error Taxonomy
@@ -97,7 +97,7 @@ Size:        1,234,567 bytes
 CRYPTOGRAPHIC IDENTITY
 ----------------------
 Device Key:  a1b2c3d4e5f6...
-App:         com.bestdaylabs.proofaudio v1.0.0
+App:         com.bestdaylabs.proofcapture v1.0.0
 
 TRUST VECTORS
 -------------

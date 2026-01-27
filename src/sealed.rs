@@ -1,6 +1,6 @@
 //! Sealed proof bundle handling.
 //!
-//! Handles decryption of password-protected .proofaudio bundles.
+//! Handles decryption of password-protected .proofcapture bundles.
 
 use serde::Deserialize;
 
@@ -10,7 +10,7 @@ use crate::error::{Result, VerifyError};
 /// Current supported bundle version.
 pub const CURRENT_BUNDLE_VERSION: i32 = 1;
 
-/// Outer structure of a sealed proof bundle (.proofaudio file).
+/// Outer structure of a sealed proof bundle (.proofcapture file).
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct SealedProofBundle {

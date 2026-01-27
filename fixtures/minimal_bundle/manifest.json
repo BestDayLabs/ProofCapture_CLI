@@ -1,16 +1,16 @@
 {
-  "appBundleId" : "com.bestdaylabs.proofaudio",
+  "appBundleId" : "com.bestdaylabs.proofcapture",
   "appVersion" : "1.0.0",
   "audioFormat" : "aac",
   "audioHash" : "Wxhwz2uJrpqeaZzMQrIabr4azlI0EygRI02tqgZqA6Y=",
   "audioSizeBytes" : 88200,
-  "captureEnd" : "2026-01-24T05:41:03Z",
-  "captureStart" : "2026-01-24T05:41:02Z",
-  "deviceKeyId" : "1xbZPl5wbRvV5gIeVHTCoUdgb55IMFjzF5ImnRPwx4o=",
+  "captureEnd" : "2026-01-27T02:57:17Z",
+  "captureStart" : "2026-01-27T02:57:16Z",
+  "deviceKeyId" : "cgqiCV96mcIOaJ25A9c1zZ3fJHVsxMI3u55Ri6ITcQY=",
   "durationSeconds" : 1,
-  "publicKey" : "b9YxtJcsbdVGJ+OpOn6IN8SaZEOg8yXA1PumapXkLfUeQ+1C4Bd0wN8F61G5UKBUJ0tlNXb3nVE1V6hcKrbOuA==",
+  "publicKey" : "gbUJkq2W7kjAISqU2\/bJmf3BnXfzNkaK1SQjT0LcIMuHl7sw2g2yAhtY+UvCMjsb8\/Cl63\/36zntP\/m0abrlqA==",
   "schemaVersion" : 1,
-  "signature" : "oYU22QLomInc3Lji9etp\/anE5pNWPajrMbGk5Ox5mN\/diIzti0MGewWhzm63nPt+WVAO115fbxo03Yma8Nsn2Q==",
+  "signature" : "WypNm0M1fjsufxxNGq92dT3Dm2xtx3xuKnweZgSM7HsMjT0zUKHCDrImWsF1DhZ\/83YPar1D7mxgf7PXBTRdhA==",
   "trustVectors" : {
 
   }

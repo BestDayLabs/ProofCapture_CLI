@@ -58,7 +58,7 @@ pub fn verify_standard_bundle(bundle_path: &Path) -> Result<VerificationResult> 
     verify_audio_and_manifest(&audio_bytes, &manifest_bytes)
 }
 
-/// Verify a sealed proof bundle (.proofaudio file).
+/// Verify a sealed proof bundle (.proofcapture file).
 pub fn verify_sealed_bundle(bundle_path: &Path, password: &str) -> Result<VerificationResult> {
     let result = verify_and_extract_sealed_bundle(bundle_path, password)?;
     Ok(VerificationResult {
@@ -181,7 +181,7 @@ mod tests {
         let verification = result.unwrap();
         assert_eq!(verification.trust_level, TrustLevel::C);
         assert_eq!(verification.manifest.schema_version, 1);
-        assert_eq!(verification.manifest.app_bundle_id, "com.bestdaylabs.proofaudio");
+        assert_eq!(verification.manifest.app_bundle_id, "com.bestdaylabs.proofcapture");
     }
 
     #[test]
@@ -235,18 +235,18 @@ mod tests {
 
     #[test]
     fn test_verify_sealed_bundle_with_correct_password() {
-        let bundle_path = fixtures_dir().join("sealed_test.proofaudio");
+        let bundle_path = fixtures_dir().join("sealed_test.proofcapture");
         let result = verify_sealed_bundle(&bundle_path, "test-password-123");
 
         assert!(result.is_ok(), "Sealed bundle should verify with correct password: {:?}", result.err());
 
         let verification = result.unwrap();
-        assert_eq!(verification.manifest.app_bundle_id, "com.bestdaylabs.proofaudio");
+        assert_eq!(verification.manifest.app_bundle_id, "com.bestdaylabs.proofcapture");
     }
 
     #[test]
     fn test_verify_sealed_bundle_with_wrong_password_fails() {
-        let bundle_path = fixtures_dir().join("sealed_test.proofaudio");
+        let bundle_path = fixtures_dir().join("sealed_test.proofcapture");
         let result = verify_sealed_bundle(&bundle_path, "wrong-password");
 
         assert!(result.is_err());
@@ -255,7 +255,7 @@ mod tests {
 
     #[test]
     fn test_verify_sealed_bundle_with_empty_password_fails() {
-        let bundle_path = fixtures_dir().join("sealed_test.proofaudio");
+        let bundle_path = fixtures_dir().join("sealed_test.proofcapture");
         let result = verify_sealed_bundle(&bundle_path, "");
 
         assert!(result.is_err());
@@ -263,7 +263,7 @@ mod tests {
 
     #[test]
     fn test_sealed_bundle_has_trust_vectors() {
-        let bundle_path = fixtures_dir().join("sealed_test.proofaudio");
+        let bundle_path = fixtures_dir().join("sealed_test.proofcapture");
         let result = verify_sealed_bundle(&bundle_path, "test-password-123").unwrap();
 
         // Sealed test bundle has continuity and clock vectors
@@ -284,7 +284,7 @@ mod tests {
     #[test]
     fn test_verify_modified_audio_fails() {
         // Create a temporary copy of minimal bundle with modified audio
-        let temp_dir = std::env::temp_dir().join("proofaudio_test_modified");
+        let temp_dir = std::env::temp_dir().join("proofcapture_test_modified");
         let _ = fs::remove_dir_all(&temp_dir); // Clean up any previous run
         fs::create_dir_all(&temp_dir).unwrap();
 
@@ -309,7 +309,7 @@ mod tests {
     #[test]
     fn test_verify_tampered_manifest_fails() {
         // Create a temporary copy with tampered manifest
-        let temp_dir = std::env::temp_dir().join("proofaudio_test_tampered");
+        let temp_dir = std::env::temp_dir().join("proofcapture_test_tampered");
         let _ = fs::remove_dir_all(&temp_dir);
         fs::create_dir_all(&temp_dir).unwrap();
 

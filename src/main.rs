@@ -1,6 +1,6 @@
-//! ProofAudio CLI Verifier
+//! ProofCapture CLI Verifier
 //!
-//! Verify ProofAudio recordings from the command line.
+//! Verify ProofCapture recordings from the command line.
 
 use std::fs;
 use std::io::{self, Write};
@@ -9,17 +9,17 @@ use std::process::ExitCode;
 
 use clap::Parser;
 
-use proofaudio_cli::verify::{verify_sealed_bundle, verify_and_extract_sealed_bundle, verify_standard_bundle, VerificationResult};
-use proofaudio_cli::VerifyError;
+use proofcapture_cli::verify::{verify_sealed_bundle, verify_and_extract_sealed_bundle, verify_standard_bundle, VerificationResult};
+use proofcapture_cli::VerifyError;
 
-/// ProofAudio CLI Verifier - Verify ProofAudio recordings
+/// ProofCapture CLI Verifier - Verify ProofCapture recordings
 #[derive(Parser, Debug)]
-#[command(name = "proofaudio-cli")]
+#[command(name = "proofcapture-cli")]
 #[command(author = "Best Day Labs")]
 #[command(version)]
-#[command(about = "Verify ProofAudio recordings from the command line")]
+#[command(about = "Verify ProofCapture recordings from the command line")]
 struct Args {
-    /// Path to the proof bundle or .proofaudio file
+    /// Path to the proof bundle or .proofcapture file
     #[arg(value_name = "PATH")]
     path: PathBuf,
 
@@ -76,10 +76,10 @@ fn main() -> ExitCode {
 fn run(args: &Args) -> Result<VerificationResult, VerifyError> {
     let path = &args.path;
 
-    // Check if it's a sealed bundle (.proofaudio)
+    // Check if it's a sealed bundle (.proofcapture)
     let is_sealed = path
         .extension()
-        .map(|ext| ext == "proofaudio")
+        .map(|ext| ext == "proofcapture")
         .unwrap_or(false);
 
     if is_sealed {
@@ -111,7 +111,7 @@ fn run(args: &Args) -> Result<VerificationResult, VerifyError> {
         }
     } else {
         if args.extract.is_some() {
-            eprintln!("Note: --extract only applies to sealed .proofaudio files.");
+            eprintln!("Note: --extract only applies to sealed .proofcapture files.");
             eprintln!("      Standard bundles already contain the audio file.");
         }
         verify_standard_bundle(path)
@@ -334,7 +334,7 @@ fn print_error_text(error: &VerifyError) {
         }
         VerifyError::SignatureInvalid => {
             eprintln!("The digital signature is invalid. The manifest may have");
-            eprintln!("been tampered with or was not created by ProofAudio.");
+            eprintln!("been tampered with or was not created by ProofCapture.");
         }
         VerifyError::DecryptionFailed => {
             eprintln!("Could not decrypt the sealed proof. Please check your");

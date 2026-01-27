@@ -1,21 +1,21 @@
-//! ProofAudio CLI Verifier
+//! ProofCapture CLI Verifier
 //!
-//! A command-line tool for verifying ProofAudio recordings.
+//! A command-line tool for verifying ProofCapture recordings.
 //!
 //! This library provides functionality to verify both standard proof bundles
-//! and password-protected sealed proof bundles (.proofaudio files).
+//! and password-protected sealed proof bundles (.proofcapture files).
 //!
 //! # Example
 //!
 //! ```no_run
 //! use std::path::Path;
-//! use proofaudio_cli::verify::{verify_standard_bundle, verify_sealed_bundle};
+//! use proofcapture_cli::verify::{verify_standard_bundle, verify_sealed_bundle};
 //!
 //! // Verify a standard bundle
 //! let result = verify_standard_bundle(Path::new("./recording_bundle/"));
 //!
 //! // Verify a sealed bundle
-//! let result = verify_sealed_bundle(Path::new("evidence.proofaudio"), "password");
+//! let result = verify_sealed_bundle(Path::new("evidence.proofcapture"), "password");
 //! ```
 
 pub mod crypto;

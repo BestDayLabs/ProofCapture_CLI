@@ -1,4 +1,4 @@
-//! Cryptographic operations for ProofAudio verification.
+//! Cryptographic operations for ProofCapture verification.
 //!
 //! Implements SHA-256 hashing, P-256 ECDSA verification, AES-256-GCM decryption,
 //! and PBKDF2 key derivation to match the iOS app's CryptoKit implementation.

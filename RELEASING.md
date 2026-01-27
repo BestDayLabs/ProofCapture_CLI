@@ -1,6 +1,6 @@
-# Releasing proofaudio-cli
+# Releasing proofcapture-cli
 
-This document describes how to release a new version of proofaudio-cli.
+This document describes how to release a new version of proofcapture-cli.
 
 ## Prerequisites
 
@@ -25,7 +25,7 @@ Follow semantic versioning:
 ### 2. Commit the Version Bump
 
 ```bash
-cd /Users/michaeltaylor/AppBuild/proofaudio-cli
+cd /Users/michaeltaylor/AppBuild/proofcapture-cli
 git add Cargo.toml Cargo.lock
 git commit -m "Bump version to X.Y.Z"
 ```
@@ -52,13 +52,13 @@ The GitHub Actions workflow will automatically:
    - Linux x64
    - Windows x64
 2. Create zip files for each binary
-3. Publish the release at https://github.com/BestDayLabs/proofaudio-cli/releases
+3. Publish the release at https://github.com/BestDayLabs/proofcapture-cli/releases
 
-Monitor progress at: https://github.com/BestDayLabs/proofaudio-cli/actions
+Monitor progress at: https://github.com/BestDayLabs/proofcapture-cli/actions
 
 ### 6. Verify the Release
 
-Once complete, verify at https://github.com/BestDayLabs/proofaudio-cli/releases that:
+Once complete, verify at https://github.com/BestDayLabs/proofcapture-cli/releases that:
 - All 4 platform zips are attached
 - Release notes are generated
 - Version tag matches
@@ -67,7 +67,7 @@ Once complete, verify at https://github.com/BestDayLabs/proofaudio-cli/releases 
 
 ```bash
 # Complete commands for v0.2.1 release:
-cd /Users/michaeltaylor/AppBuild/proofaudio-cli
+cd /Users/michaeltaylor/AppBuild/proofcapture-cli
 git push origin main
 git tag v0.2.1
 git push origin v0.2.1

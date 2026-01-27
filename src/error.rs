@@ -1,4 +1,4 @@
-//! Error types for ProofAudio CLI verification.
+//! Error types for ProofCapture CLI verification.
 
 use thiserror::Error;
 

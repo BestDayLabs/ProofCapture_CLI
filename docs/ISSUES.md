@@ -1,4 +1,4 @@
-# Issues — ProofAudio-cli
+# Issues — ProofCapture-cli
 
 Best Day Labs
 

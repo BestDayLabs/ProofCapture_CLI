@@ -1,11 +1,11 @@
 [package]
-name = "proofaudio-cli"
+name = "proofcapture-cli"
 version = "0.2.2"
 edition = "2021"
 authors = ["Best Day Labs"]
-description = "Verify ProofAudio recordings from the command line"
+description = "Verify ProofCapture recordings from the command line"
 license = "MIT"
-repository = "https://github.com/bestdaylabs/proofaudio-cli"
+repository = "https://github.com/bestdaylabs/proofcapture-cli"
 keywords = ["audio", "verification", "cryptography", "forensics"]
 categories = ["command-line-utilities", "cryptography"]
 
@@ -36,5 +36,5 @@ zip = "0.6"
 tempfile = "3.0"
 
 [[bin]]
-name = "proofaudio-cli"
+name = "proofcapture-cli"
 path = "src/main.rs"

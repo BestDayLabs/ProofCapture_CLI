@@ -46,9 +46,9 @@ impl TrustLevel {
                 "This recording was captured continuously without interruption, with full context."
             }
             TrustLevel::B => {
-                "This recording was captured by ProofAudio with location and motion context."
+                "This recording was captured by ProofCapture with location and motion context."
             }
-            TrustLevel::C => "This recording was captured by ProofAudio and has not been modified.",
+            TrustLevel::C => "This recording was captured by ProofCapture and has not been modified.",
         }
     }
 

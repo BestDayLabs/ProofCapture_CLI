@@ -1,4 +1,4 @@
-# CLI Interoperability Specification — ProofAudio
+# CLI Interoperability Specification — ProofCapture
 
 Best Day Labs
 
@@ -6,7 +6,7 @@ Best Day Labs
 
 ## 1. Purpose
 
-This document specifies the exact byte-level formats required for external tools (CLI verifiers, third-party validators) to verify ProofAudio recordings. It is the canonical reference for implementing cross-platform verification.
+This document specifies the exact byte-level formats required for external tools (CLI verifiers, third-party validators) to verify ProofCapture recordings. It is the canonical reference for implementing cross-platform verification.
 
 **Target Audience:** Developers implementing CLI verifiers in Rust, Go, or other languages.
 
@@ -104,7 +104,7 @@ Where `publicKeyRawBytes` is the 64-byte raw public key (not base64 encoded).
   "captureEnd": "2024-01-15T10:32:15Z",
   "durationSeconds": 135.0,
   "appVersion": "1.0.0",
-  "appBundleId": "com.bestdaylabs.proofaudio",
+  "appBundleId": "com.bestdaylabs.proofcapture",
   "deviceKeyId": "<base64-sha256-of-public-key>",
   "publicKey": "<base64-raw-64-byte-public-key>",
   "trustVectors": {
@@ -216,7 +216,7 @@ Given this manifest:
   "captureEnd": "2024-01-01T00:00:00.000Z",
   "durationSeconds": 0.0,
   "appVersion": "1.0.0",
-  "appBundleId": "com.bestdaylabs.proofaudio",
+  "appBundleId": "com.bestdaylabs.proofcapture",
   "deviceKeyId": "abc123",
   "publicKey": "AAAA...",
   "trustVectors": {
@@ -231,7 +231,7 @@ Given this manifest:
 
 The canonical JSON for hashing (sorted keys, no whitespace, no signature):
 ```json
-{"appBundleId":"com.bestdaylabs.proofaudio","appVersion":"1.0.0","audioFormat":"aac","audioHash":"47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=","audioSizeBytes":0,"captureEnd":"2024-01-01T00:00:00.000Z","captureStart":"2024-01-01T00:00:00.000Z","deviceKeyId":"abc123","durationSeconds":0,"publicKey":"AAAA...","schemaVersion":1,"trustVectors":{"clock":null,"continuity":null,"location":null,"motion":null}}
+{"appBundleId":"com.bestdaylabs.proofcapture","appVersion":"1.0.0","audioFormat":"aac","audioHash":"47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=","audioSizeBytes":0,"captureEnd":"2024-01-01T00:00:00.000Z","captureStart":"2024-01-01T00:00:00.000Z","deviceKeyId":"abc123","durationSeconds":0,"publicKey":"AAAA...","schemaVersion":1,"trustVectors":{"clock":null,"continuity":null,"location":null,"motion":null}}
 ```
 
 ### 5.4 Hash Computation
@@ -300,7 +300,7 @@ audioHash = Base64(SHA256(rawAudioFileBytes))
 
 ### 7.1 File Structure
 
-**File Extension:** `.proofaudio`
+**File Extension:** `.proofcapture`
 
 **Content-Type:** `application/json`
 
@@ -503,7 +503,7 @@ Audio Hash:  47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=
 CRYPTOGRAPHIC IDENTITY
 ----------------------
 Device Key:  a1b2c3d4e5f6...
-App:         com.bestdaylabs.proofaudio v1.0.0
+App:         com.bestdaylabs.proofcapture v1.0.0
 
 TRUST VECTORS
 -------------
@@ -539,7 +539,7 @@ verified as authentic.
 The CLI supports extracting the audio file from sealed bundles after successful verification:
 
 ```bash
-proofaudio-cli evidence.proofaudio --password "secret" --extract ./output/
+proofcapture-cli evidence.proofcapture --password "secret" --extract ./output/
 ```
 
 Upon successful verification, this writes the audio file to the specified directory:
@@ -548,7 +548,7 @@ Verification passed!
 Extracted audio to: ./output/recording.m4a
 ```
 
-**Security Note:** The extracted audio file loses its cryptographic binding to the manifest once written to disk. For evidentiary purposes, always provide the original `.proofaudio` file.
+**Security Note:** The extracted audio file loses its cryptographic binding to the manifest once written to disk. For evidentiary purposes, always provide the original `.proofcapture` file.
 
 ---
 
