@@ -668,8 +668,8 @@ dependencies = [
 ]
 
 [[package]]
-name = "proofaudio-cli"
-version = "0.2.0"
+name = "proofcapture-cli"
+version = "0.2.3"
 dependencies = [
  "aes-gcm",
  "anyhow",

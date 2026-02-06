@@ -1,12 +1,12 @@
 [package]
 name = "proofcapture-cli"
-version = "0.2.2"
+version = "0.2.3"
 edition = "2021"
 authors = ["Best Day Labs"]
 description = "Verify ProofCapture recordings from the command line"
 license = "MIT"
-repository = "https://github.com/bestdaylabs/proofcapture-cli"
-keywords = ["audio", "verification", "cryptography", "forensics"]
+repository = "https://github.com/BestDayLabs/ProofCapture_CLI"
+keywords = ["media", "verification", "cryptography", "forensics"]
 categories = ["command-line-utilities", "cryptography"]
 
 [dependencies]
