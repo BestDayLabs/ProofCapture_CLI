@@ -9,7 +9,7 @@ use std::process::ExitCode;
 
 use clap::Parser;
 
-use proofcapture_cli::verify::{verify_sealed_bundle, verify_and_extract_sealed_bundle, verify_standard_bundle, VerificationResult};
+use proofcapture_cli::verify::{verify_sealed_bundle, verify_and_extract_sealed_bundle, verify_standard_bundle, verify_open_bundle, VerificationResult};
 use proofcapture_cli::VerifyError;
 
 /// ProofCapture CLI Verifier - Verify ProofCapture recordings
@@ -19,7 +19,7 @@ use proofcapture_cli::VerifyError;
 #[command(version)]
 #[command(about = "Verify ProofCapture recordings from the command line")]
 struct Args {
-    /// Path to the proof bundle or .proofcapture file
+    /// Path to a proof bundle (.proofcapture, .proofbundle, or directory)
     #[arg(value_name = "PATH")]
     path: PathBuf,
 
@@ -76,45 +76,50 @@ fn main() -> ExitCode {
 fn run(args: &Args) -> Result<VerificationResult, VerifyError> {
     let path = &args.path;
 
-    // Check if it's a sealed bundle (.proofcapture)
-    let is_sealed = path
-        .extension()
-        .map(|ext| ext == "proofcapture")
-        .unwrap_or(false);
+    let ext = path.extension().and_then(|e| e.to_str()).unwrap_or("");
 
-    if is_sealed {
-        // Get password
-        let password = match &args.password {
-            Some(p) => p.clone(),
-            None => prompt_password()?,
-        };
+    match ext {
+        "proofcapture" => {
+            // Sealed bundle - requires password
+            let password = match &args.password {
+                Some(p) => p.clone(),
+                None => prompt_password()?,
+            };
 
-        // If extract is requested, use the extract function
-        if let Some(extract_dir) = &args.extract {
-            let result = verify_and_extract_sealed_bundle(path, &password)?;
+            if let Some(extract_dir) = &args.extract {
+                let result = verify_and_extract_sealed_bundle(path, &password)?;
 
-            // Create output directory if needed
-            fs::create_dir_all(extract_dir).map_err(|e| VerifyError::Io(e))?;
+                fs::create_dir_all(extract_dir).map_err(|e| VerifyError::Io(e))?;
 
-            // Write audio file
-            let audio_path = extract_dir.join(&result.audio_filename);
-            fs::write(&audio_path, &result.audio_data).map_err(|e| VerifyError::Io(e))?;
+                let audio_path = extract_dir.join(&result.audio_filename);
+                fs::write(&audio_path, &result.audio_data).map_err(|e| VerifyError::Io(e))?;
 
-            eprintln!("Audio extracted to: {}", audio_path.display());
+                eprintln!("Audio extracted to: {}", audio_path.display());
 
-            Ok(VerificationResult {
-                manifest: result.manifest,
-                trust_level: result.trust_level,
-            })
-        } else {
-            verify_sealed_bundle(path, &password)
+                Ok(VerificationResult {
+                    manifest: result.manifest,
+                    trust_level: result.trust_level,
+                })
+            } else {
+                verify_sealed_bundle(path, &password)
+            }
         }
-    } else {
-        if args.extract.is_some() {
-            eprintln!("Note: --extract only applies to sealed .proofcapture files.");
-            eprintln!("      Standard bundles already contain the audio file.");
+        "proofbundle" => {
+            // Open proof bundle - no password needed
+            if args.extract.is_some() {
+                eprintln!("Note: --extract only applies to sealed .proofcapture files.");
+                eprintln!("      Open bundles already contain unencrypted media.");
+            }
+            verify_open_bundle(path)
         }
-        verify_standard_bundle(path)
+        _ => {
+            // Standard bundle (directory or loose files)
+            if args.extract.is_some() {
+                eprintln!("Note: --extract only applies to sealed .proofcapture files.");
+                eprintln!("      Standard bundles already contain the audio file.");
+            }
+            verify_standard_bundle(path)
+        }
     }
 }
 
@@ -186,8 +191,8 @@ fn print_success_text(result: &VerificationResult, verbose: bool) {
 
     if let Some(loc) = &m.trust_vectors.location {
         println!("Location:");
-        println!("  Start:     {:.3}, {:.3} (±{:.0}m)", loc.start.lat, loc.start.lon, loc.start.accuracy);
-        println!("  End:       {:.3}, {:.3} (±{:.0}m)", loc.end.lat, loc.end.lon, loc.end.accuracy);
+        println!("  Start:     {:.6}, {:.6} (±{:.0}m)", loc.start.lat, loc.start.lon, loc.start.accuracy);
+        println!("  End:       {:.6}, {:.6} (±{:.0}m)", loc.end.lat, loc.end.lon, loc.end.accuracy);
     } else {
         println!("Location:    Not captured");
     }

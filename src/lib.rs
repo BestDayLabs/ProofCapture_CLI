@@ -28,4 +28,4 @@ pub mod verify;
 pub use error::{Result, VerifyError};
 pub use manifest::SignedAudioManifest;
 pub use trust::TrustLevel;
-pub use verify::{verify_audio_and_manifest, verify_sealed_bundle, verify_and_extract_sealed_bundle, verify_standard_bundle, VerificationResult, SealedVerificationResult};
+pub use verify::{verify_audio_and_manifest, verify_sealed_bundle, verify_and_extract_sealed_bundle, verify_standard_bundle, verify_open_bundle, VerificationResult, SealedVerificationResult};

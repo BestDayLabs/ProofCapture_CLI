@@ -3,6 +3,7 @@
 //! Implements the verification pipeline for both standard and sealed bundles.
 
 use std::fs;
+use std::io::Read;
 use std::path::Path;
 
 use crate::crypto::{decode_base64, parse_public_key, parse_signature, sha256_base64, verify_signature};
@@ -89,6 +90,42 @@ pub fn verify_and_extract_sealed_bundle(bundle_path: &Path, password: &str) -> R
         audio_data: audio_bytes,
         audio_filename: payload.audio_filename.clone(),
     })
+}
+
+/// Verify an open proof bundle (.proofbundle zip file).
+///
+/// Extracts the zip archive in memory, finds manifest.json and the media file,
+/// then verifies using the standard audio+manifest pipeline.
+pub fn verify_open_bundle(bundle_path: &Path) -> Result<VerificationResult> {
+    let bundle_bytes = fs::read(bundle_path).map_err(|e| VerifyError::Io(e))?;
+
+    let cursor = std::io::Cursor::new(&bundle_bytes);
+    let mut archive = zip::ZipArchive::new(cursor)
+        .map_err(|_| VerifyError::ManifestMalformed)?;
+
+    let mut manifest_bytes: Option<Vec<u8>> = None;
+    let mut media_bytes: Option<Vec<u8>> = None;
+
+    for i in 0..archive.len() {
+        let mut file = archive.by_index(i)
+            .map_err(|_| VerifyError::ManifestMalformed)?;
+        let name = file.name().to_string();
+
+        let mut buf = Vec::new();
+        file.read_to_end(&mut buf)
+            .map_err(|e| VerifyError::Io(e))?;
+
+        if name == "manifest.json" {
+            manifest_bytes = Some(buf);
+        } else {
+            media_bytes = Some(buf);
+        }
+    }
+
+    let manifest_bytes = manifest_bytes.ok_or(VerifyError::ManifestMalformed)?;
+    let media_bytes = media_bytes.ok_or(VerifyError::AudioFileMissing)?;
+
+    verify_audio_and_manifest(&media_bytes, &manifest_bytes)
 }
 
 /// Core verification of audio bytes against manifest.
