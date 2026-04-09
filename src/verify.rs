@@ -8,7 +8,7 @@ use std::path::Path;
 
 use crate::crypto::{decode_base64, parse_public_key, parse_signature, sha256_base64, verify_signature};
 use crate::error::{Result, VerifyError};
-use crate::manifest::{compute_canonical_hash_from_bytes, SignedAudioManifest};
+use crate::manifest::{compute_canonical_bytes_from_bytes, SignedAudioManifest};
 use crate::sealed::SealedProofBundle;
 use crate::trust::{compute_trust_level, TrustLevel};
 
@@ -88,7 +88,7 @@ pub fn verify_and_extract_sealed_bundle(bundle_path: &Path, password: &str) -> R
         manifest: verification.manifest,
         trust_level: verification.trust_level,
         audio_data: audio_bytes,
-        audio_filename: payload.audio_filename.clone(),
+        audio_filename: payload.media_filename.clone(),
     })
 }
 
@@ -149,14 +149,16 @@ pub fn verify_audio_and_manifest(
     let public_key_bytes = decode_base64(&manifest.public_key)?;
     let public_key = parse_public_key(&public_key_bytes)?;
 
-    // Step 3: Compute canonical manifest hash (use original bytes to preserve formatting)
-    let manifest_hash = compute_canonical_hash_from_bytes(manifest_bytes)?;
+    // Step 3: Compute canonical JSON bytes (used as signature message)
+    let canonical_json = compute_canonical_bytes_from_bytes(manifest_bytes)?;
 
     // Step 4: Parse and verify signature
+    // verify_signature passes canonical JSON to p256::verify() which hashes once with SHA-256,
+    // matching iOS CryptoKit's signature(for:) / isValidSignature(_:for:) behavior.
     let signature_bytes = decode_base64(&manifest.signature)?;
     let signature = parse_signature(&signature_bytes)?;
 
-    if !verify_signature(&public_key, &manifest_hash, &signature) {
+    if !verify_signature(&public_key, canonical_json.as_bytes(), &signature) {
         return Err(VerifyError::SignatureInvalid);
     }
 

@@ -52,13 +52,15 @@ pub fn parse_signature(raw_64_bytes: &[u8]) -> Result<Signature> {
     Signature::from_slice(raw_64_bytes).map_err(|_| VerifyError::SignatureInvalid)
 }
 
-/// Verifies an ECDSA signature over a message hash.
+/// Verifies an ECDSA signature over a message.
+/// The p256 crate's verify() hashes the message with SHA-256 internally,
+/// matching iOS CryptoKit's signature(for:) / isValidSignature(_:for:) behavior.
 pub fn verify_signature(
     public_key: &VerifyingKey,
-    message_hash: &[u8; 32],
+    message: &[u8],
     signature: &Signature,
 ) -> bool {
-    public_key.verify(message_hash, signature).is_ok()
+    public_key.verify(message, signature).is_ok()
 }
 
 /// Derives an AES-256 key from a password using PBKDF2-HMAC-SHA256.

@@ -139,6 +139,14 @@ impl SignedAudioManifest {
 /// Compute canonical hash directly from JSON bytes (preserves original formatting).
 /// This is the preferred method as it preserves the original number formatting.
 pub fn compute_canonical_hash_from_bytes(json_bytes: &[u8]) -> Result<[u8; 32]> {
+    let canonical_bytes = compute_canonical_bytes_from_bytes(json_bytes)?;
+    Ok(sha256_bytes(canonical_bytes.as_bytes()))
+}
+
+/// Compute canonical JSON string from JSON bytes (preserves original number formatting).
+/// Returns the canonical JSON string that should be passed to signature verification.
+/// The verifier will hash this once internally (matching iOS CryptoKit behavior).
+pub fn compute_canonical_bytes_from_bytes(json_bytes: &[u8]) -> Result<String> {
     // Parse to generic Value
     let mut value: Value =
         serde_json::from_slice(json_bytes).map_err(|_| VerifyError::ManifestMalformed)?;
@@ -149,9 +157,7 @@ pub fn compute_canonical_hash_from_bytes(json_bytes: &[u8]) -> Result<[u8; 32]> 
     }
 
     // Canonicalize (sort keys, compact)
-    let canonical = canonicalize_json(&value)?;
-
-    Ok(sha256_bytes(canonical.as_bytes()))
+    canonicalize_json(&value)
 }
 
 /// Recursively sort JSON object keys and produce compact output.

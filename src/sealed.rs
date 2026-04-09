@@ -32,13 +32,15 @@ pub struct KdfParameters {
     pub parallelism: u32,
 }
 
-/// Decrypted payload containing audio and manifest.
+/// Decrypted payload containing media and manifest.
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct DecryptedPayload {
-    pub audio_data: String,     // Base64-encoded audio bytes
+    #[serde(alias = "audioData")]
+    pub media_data: String,     // Base64-encoded media bytes
     pub manifest_data: String,  // Base64-encoded manifest JSON
-    pub audio_filename: String,
+    #[serde(alias = "audioFilename")]
+    pub media_filename: String,
 }
 
 impl SealedProofBundle {
@@ -89,14 +91,19 @@ impl SealedProofBundle {
 }
 
 impl DecryptedPayload {
-    /// Get the audio data as bytes.
-    pub fn audio_bytes(&self) -> Result<Vec<u8>> {
-        decode_base64(&self.audio_data)
+    /// Get the media data as bytes.
+    pub fn media_bytes(&self) -> Result<Vec<u8>> {
+        decode_base64(&self.media_data)
     }
 
     /// Get the manifest data as bytes.
     pub fn manifest_bytes(&self) -> Result<Vec<u8>> {
         decode_base64(&self.manifest_data)
+    }
+
+    /// Backward-compatible alias for media_bytes.
+    pub fn audio_bytes(&self) -> Result<Vec<u8>> {
+        self.media_bytes()
     }
 }
 

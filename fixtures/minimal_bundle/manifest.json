@@ -1,17 +1,1 @@
-{
-  "appBundleId" : "com.bestdaylabs.proofcapture",
-  "appVersion" : "1.0.0",
-  "audioFormat" : "aac",
-  "audioHash" : "Wxhwz2uJrpqeaZzMQrIabr4azlI0EygRI02tqgZqA6Y=",
-  "audioSizeBytes" : 88200,
-  "captureEnd" : "2026-01-27T02:57:17Z",
-  "captureStart" : "2026-01-27T02:57:16Z",
-  "deviceKeyId" : "cgqiCV96mcIOaJ25A9c1zZ3fJHVsxMI3u55Ri6ITcQY=",
-  "durationSeconds" : 1,
-  "publicKey" : "gbUJkq2W7kjAISqU2\/bJmf3BnXfzNkaK1SQjT0LcIMuHl7sw2g2yAhtY+UvCMjsb8\/Cl63\/36zntP\/m0abrlqA==",
-  "schemaVersion" : 1,
-  "signature" : "WypNm0M1fjsufxxNGq92dT3Dm2xtx3xuKnweZgSM7HsMjT0zUKHCDrImWsF1DhZ\/83YPar1D7mxgf7PXBTRdhA==",
-  "trustVectors" : {
-
-  }
-}
+{"appBundleId":"com.bestdaylabs.proofcapture","appVersion":"1.0.0","audioFormat":"aac","audioHash":"Wxhwz2uJrpqeaZzMQrIabr4azlI0EygRI02tqgZqA6Y=","audioSizeBytes":88200,"captureEnd":"2026-04-09T03:49:38Z","captureStart":"2026-04-09T03:49:37Z","deviceKeyId":"wDIzMVafCOB3nMBzEDEcKM67AS1s1OEbfwdwSdgemTQ=","durationSeconds":1,"publicKey":"ly5zxDszXLuM4GK9wp23zxk8R\/URHFGL7et55NIEYNJ7Rmj8aIxQj+ZBChriq2FhhO+nwlO2ym\/or2+Er2zZlw==","schemaVersion":1,"signature":"yEmT73l75UNjTZRBxXbim\/y2T3QpNz5po27Pr1LEaaKoFnLsoUL9Y9\/TbfQoA8gzskole6a\/8ZCIJsJ5UQsphQ==","trustVectors":{}}

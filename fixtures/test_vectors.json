@@ -1,9 +1,9 @@
 {
   "keys" : {
-    "deviceKeyId_base64" : "cgqiCV96mcIOaJ25A9c1zZ3fJHVsxMI3u55Ri6ITcQY=",
+    "deviceKeyId_base64" : "wDIzMVafCOB3nMBzEDEcKM67AS1s1OEbfwdwSdgemTQ=",
     "format" : "P-256 raw (64 bytes: x || y)",
     "note" : "This key is device-specific. CLI should verify signatures against this key.",
-    "publicKey_base64" : "gbUJkq2W7kjAISqU2\/bJmf3BnXfzNkaK1SQjT0LcIMuHl7sw2g2yAhtY+UvCMjsb8\/Cl63\/36zntP\/m0abrlqA=="
+    "publicKey_base64" : "ly5zxDszXLuM4GK9wp23zxk8R\/URHFGL7et55NIEYNJ7Rmj8aIxQj+ZBChriq2FhhO+nwlO2ym\/or2+Er2zZlw=="
   },
   "sha256" : [
     {
